@@ -29,6 +29,32 @@ test('Try geoContext with only a radius', () => {
   expect(rules).toBeUndefined()
 })
 
+test('Try geoContext with only a minimumAroundRadius', () => {
+  const rules = adaptGeoPointsRules({
+    minimumAroundRadius: 1,
+  })
+
+  expect(rules).toBeUndefined()
+})
+
+/* 
+  if (aroundLatLngViaIP) {
+    console.warn('instant-meilisearch: `aroundLatLngViaIP` is not supported.')
+  } */
+
+test('Try geoContext with only a aroundLatLng', () => {
+  jest.spyOn(global.console, 'warn').mockImplementation(() => {
+    return undefined
+  })
+
+  console.warn('instant-meilisearch: `aroundLatLngViaIP` is not supported.')
+
+  expect(console.warn).toHaveBeenCalledWith(
+    `instant-meilisearch: \`aroundLatLngViaIP\` is not supported.`
+  )
+  expect(console.warn).toHaveBeenCalledTimes(1)
+})
+
 test('Try geoContext with an aroundLatLng', () => {
   const rules = adaptGeoPointsRules({
     aroundLatLng: '51.1241999, 9.662499900000057',
